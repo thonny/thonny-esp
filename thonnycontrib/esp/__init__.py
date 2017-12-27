@@ -32,24 +32,26 @@ class ESP8266Proxy(ESPProxy):
             (0x10C4, 0xEA60) : "A device using Silicon Labs CP210x USB to UART Bridge",
             (0x1A86, 0x7523) : "A device using USB-SERIAL CH340",
         }
+    
+    @property
+    def flash_mode(self):
+        # "dio" for some boards with a particular FlashROM configuration (e.g. some variants of a NodeMCU board)
+        # https://docs.micropython.org/en/latest/esp8266/esp8266/tutorial/intro.html
+        # https://github.com/espressif/esptool/wiki/SPI-Flash-Modes
+        
+        # TODO: detect the need for this (or provide conf option for the backend)
+        return "keep"
+        #return "dio"
         
     def construct_firmware_upload_command(self, firmware_path):
-        cmd = [get_runner().get_frontend_python(), '-u', '-m', 
+        return [get_runner().get_frontend_python(), '-u', '-m', 
                 'esptool', 
                 '--port', self.port, 
-                '--baud', '460800', 
+                #'--baud', '460800',  
                 'write_flash', 
-                '--flash_size=detect']
-        
-        if True:
-            # For some boards with a particular FlashROM configuration (e.g. some variants of a NodeMCU board)
-            # https://docs.micropython.org/en/latest/esp8266/esp8266/tutorial/intro.html
-            # https://github.com/espressif/esptool/wiki/SPI-Flash-Modes
-            cmd.extend(["--flash_mode", "dio"])
-             
-        cmd.extend(['0x0000', firmware_path])
-        
-        return cmd
+                #'--flash_size', 'detect',
+                #"--flash_mode", self.flash_mode,
+                '0x0000', firmware_path]
         
 class ESP32Proxy(ESPProxy):
     @property
@@ -62,11 +64,11 @@ class ESP32Proxy(ESPProxy):
     def construct_firmware_upload_command(self, firmware_path):
         cmd = [get_runner().get_frontend_python(), '-u', '-m', 
                 'esptool', 
-                '--chip', 'esp32',
+                #'--chip', 'esp32',
                 '--port', self.port, 
-                '--baud', '460800', 
+                #'--baud', '460800', 
                 'write_flash', 
-                '--flash_size=detect',
+                #'--flash_size=detect',
                 '0x1000',
                 firmware_path]
         
