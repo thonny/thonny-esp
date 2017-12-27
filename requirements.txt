@@ -1,0 +1,3 @@
+thonny>=2.1.0
+pyserial
+esptool>=2.0
