@@ -27,11 +27,11 @@ class ESPProxy(MicroPythonProxy):
 class ESP8266Proxy(ESPProxy):
     @property
     def known_usb_vids_pids(self):
-        return {
+        return super().known_usb_vids_pids | {
             # eg. Adafruit Feather Huzzah 
-            (0x10C4, 0xEA60) : "A device using Silicon Labs CP210x USB to UART Bridge",
-            (0x1A86, 0x7523) : "A device using USB-SERIAL CH340",
-        }
+            (0x10C4, 0xEA60), # Silicon Labs CP210x USB to UART Bridge,
+            (0x1A86, 0x7523), # USB-SERIAL CH340,
+        } 
     
     @property
     def flash_mode(self):
@@ -56,9 +56,9 @@ class ESP8266Proxy(ESPProxy):
 class ESP32Proxy(ESPProxy):
     @property
     def known_usb_vids_pids(self):
-        return {
+        return super().known_usb_vids_pids | {
             # eg. ESP-WROOM-32
-            (0x10C4, 0xEA60) : "A device using Silicon Labs CP210x USB to UART Bridge"
+            (0x10C4, 0xEA60), # Silicon Labs CP210x USB to UART Bridge
         }
         
     def construct_firmware_upload_command(self, firmware_path):
@@ -76,7 +76,6 @@ class ESP32Proxy(ESPProxy):
 
 
 def load_early_plugin():
-    print("LOADING ESP")
     get_workbench().add_backend("ESP8266", ESP8266Proxy)
     get_workbench().add_backend("ESP32", ESP32Proxy)
 
