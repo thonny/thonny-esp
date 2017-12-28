@@ -25,6 +25,9 @@ class ESPProxy(MicroPythonProxy):
         
         
 class ESP8266Proxy(ESPProxy):
+    description = "MicroPython on ESP8266"
+    config_page_constructor = "ESP8266"
+    
     @property
     def known_usb_vids_pids(self):
         return super().known_usb_vids_pids | {
@@ -76,8 +79,8 @@ class ESP32Proxy(ESPProxy):
 
 
 def load_early_plugin():
-    get_workbench().add_backend("ESP8266", ESP8266Proxy)
-    get_workbench().add_backend("ESP32", ESP32Proxy)
+    get_workbench().add_backend("ESP8266", ESP8266Proxy, "MicroPython on ESP8266", "...66")
+    get_workbench().add_backend("ESP32", ESP32Proxy, "MicroPython on ESP32", "...32")
 
 def load_plugin():
     def erase_flash():
