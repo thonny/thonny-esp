@@ -1,9 +1,10 @@
-from thonnycontrib.micropython import MicroPythonProxy
+from thonnycontrib.micropython import MicroPythonProxy, MicroPythonConfigPage
 from thonny.globals import get_workbench, get_runner
 import os
 from thonny import THONNY_USER_BASE
 import subprocess
 from thonny.ui_utils import SubprocessDialog
+from thonny.running import get_frontend_python
 
 class ESPProxy(MicroPythonProxy):
     @property
@@ -14,7 +15,7 @@ class ESPProxy(MicroPythonProxy):
         env = os.environ.copy()
         env["PYTHONUSERBASE"] = THONNY_USER_BASE # Use Thonny plugins folder instead of regular userbase
         self.disconnect()
-        cmd = [get_runner().get_frontend_python(), '-u', '-m', 
+        cmd = [get_frontend_python(), '-u', '-m', 
                 'esptool', 
                 '--port', self.port, 
                 'erase_flash']
@@ -47,7 +48,7 @@ class ESP8266Proxy(ESPProxy):
         #return "dio"
         
     def construct_firmware_upload_command(self, firmware_path):
-        return [get_runner().get_frontend_python(), '-u', '-m', 
+        return [get_frontend_python(), '-u', '-m', 
                 'esptool', 
                 '--port', self.port, 
                 #'--baud', '460800',  
@@ -65,7 +66,7 @@ class ESP32Proxy(ESPProxy):
         }
         
     def construct_firmware_upload_command(self, firmware_path):
-        cmd = [get_runner().get_frontend_python(), '-u', '-m', 
+        return [get_frontend_python(), '-u', '-m', 
                 'esptool', 
                 #'--chip', 'esp32',
                 '--port', self.port, 
@@ -74,13 +75,16 @@ class ESP32Proxy(ESPProxy):
                 #'--flash_size=detect',
                 '0x1000',
                 firmware_path]
-        
-        cmd.extend = ['0', firmware_path]
 
+class ESP8266ConfigPage(MicroPythonConfigPage):
+    pass
+
+class ESP32ConfigPage(MicroPythonConfigPage):
+    pass
 
 def load_early_plugin():
-    get_workbench().add_backend("ESP8266", ESP8266Proxy, "MicroPython on ESP8266", "...66")
-    get_workbench().add_backend("ESP32", ESP32Proxy, "MicroPython on ESP32", "...32")
+    get_workbench().add_backend("ESP8266", ESP8266Proxy, "MicroPython on ESP8266", ESP8266ConfigPage)
+    get_workbench().add_backend("ESP32", ESP32Proxy, "MicroPython on ESP32", ESP32ConfigPage)
 
 def load_plugin():
     def erase_flash():
@@ -88,7 +92,8 @@ def load_plugin():
         proxy.erase_flash()
     
     def erase_flash_enabled():
-        return isinstance(get_runner().get_backend_proxy(), ESPProxy)
+        return (isinstance(get_runner().get_backend_proxy(), ESPProxy)
+                and get_runner().get_backend_proxy().micropython_upload_enabled)
         
     get_workbench().add_command("erasespflash", "tools", "Erase ESP8266/ESP32 flash",
                                 erase_flash,
