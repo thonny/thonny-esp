@@ -46,7 +46,7 @@ More info about Thonny: http://thonny.org.""",
       keywords="IDE education programming ESP8266 ESP32 MicroPython Thonny",
       platforms=["Windows", "macOS", "Linux"],
       python_requires=">=3.4",
-	  package_data={'thonnycontrib.esp': ['dummy_modules/*',  'res/*']},
+	  package_data={'thonnycontrib.esp': ['esp8266_api_stubs/*', 'esp32_api_stubs/*']},
       install_requires=requirements,
       packages=["thonnycontrib.esp"],
 )
