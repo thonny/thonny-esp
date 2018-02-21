@@ -83,6 +83,8 @@ class ESP32ConfigPage(MicroPythonConfigPage):
     pass
 
 def load_early_plugin():
+    get_workbench().set_default("ESP8266.port", "auto")
+    get_workbench().set_default("ESP32.port", "auto")
     get_workbench().add_backend("ESP8266", ESP8266Proxy, "MicroPython on ESP8266", ESP8266ConfigPage)
     get_workbench().add_backend("ESP32", ESP32Proxy, "MicroPython on ESP32", ESP32ConfigPage)
 
