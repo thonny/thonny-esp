@@ -1,5 +1,5 @@
 from thonnycontrib.micropython import MicroPythonProxy, MicroPythonConfigPage
-from thonny.globals import get_workbench, get_runner
+from thonny import get_workbench, get_runner
 import os
 from thonny import THONNY_USER_BASE
 import subprocess
@@ -82,13 +82,12 @@ class ESP8266ConfigPage(MicroPythonConfigPage):
 class ESP32ConfigPage(MicroPythonConfigPage):
     pass
 
-def load_early_plugin():
+def load_plugin():
     get_workbench().set_default("ESP8266.port", "auto")
     get_workbench().set_default("ESP32.port", "auto")
     get_workbench().add_backend("ESP8266", ESP8266Proxy, "MicroPython on ESP8266", ESP8266ConfigPage)
     get_workbench().add_backend("ESP32", ESP32Proxy, "MicroPython on ESP32", ESP32ConfigPage)
 
-def load_plugin():
     def erase_flash():
         proxy = get_runner().get_backend_proxy()
         proxy.erase_flash()
@@ -99,7 +98,7 @@ def load_plugin():
         
     get_workbench().add_command("erasespflash", "tools", "Erase ESP8266/ESP32 flash",
                                 erase_flash,
-                                erase_flash_enabled,
+                                tester=erase_flash_enabled,
                                 group=120,
                                 position_in_group="alphabetic")
     
