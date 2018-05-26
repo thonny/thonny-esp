@@ -58,6 +58,9 @@ class ESP8266Proxy(ESPProxy):
                 #"--flash_mode", self.flash_mode,
                 '0x0000', firmware_path]
         
+    def _get_api_stubs_path(self):
+        return os.path.join(os.path.dirname(__file__), "esp8266_api_stubs")
+    
 class ESP32Proxy(ESPProxy):
     @property
     def known_usb_vids_pids(self):
@@ -77,6 +80,9 @@ class ESP32Proxy(ESPProxy):
                 '0x1000',
                 firmware_path]
 
+    def _get_api_stubs_path(self):
+        return os.path.join(os.path.dirname(__file__), "esp32_api_stubs")
+    
 class ESP8266ConfigPage(MicroPythonConfigPage):
     pass
 
