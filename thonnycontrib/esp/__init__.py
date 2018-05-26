@@ -87,6 +87,15 @@ def load_plugin():
     add_micropython_backend("ESP8266", ESP8266Proxy, "MicroPython on ESP8266", ESP8266ConfigPage)
     add_micropython_backend("ESP32", ESP32Proxy, "MicroPython on ESP32", ESP32ConfigPage)
 
+    def upload_micropython():
+        proxy = get_runner().get_backend_proxy()
+        proxy.select_and_upload_micropython()
+    
+    def upload_micropython_enabled():
+        proxy = get_runner().get_backend_proxy()
+        return (getattr(proxy, "micropython_upload_enabled", False)
+                and isinstance(proxy, ESPProxy))
+        
     def erase_flash():
         proxy = get_runner().get_backend_proxy()
         proxy.erase_flash()
@@ -95,9 +104,13 @@ def load_plugin():
         return (isinstance(get_runner().get_backend_proxy(), ESPProxy)
                 and get_runner().get_backend_proxy().micropython_upload_enabled)
         
+    get_workbench().add_command("uploadmicropythonesp", "tools", "Upload MicroPython to ESP8266/ESP32 ...",
+                                upload_micropython,
+                                upload_micropython_enabled,
+                                group=120)
+
     get_workbench().add_command("erasespflash", "tools", "Erase ESP8266/ESP32 flash",
                                 erase_flash,
                                 tester=erase_flash_enabled,
-                                group=120,
-                                position_in_group="alphabetic")
+                                group=120)
     
