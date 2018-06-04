@@ -6,8 +6,17 @@ from thonny import THONNY_USER_BASE
 import subprocess
 from thonny.ui_utils import SubprocessDialog
 from thonny.running import get_frontend_python
+from time import sleep
 
 class ESPProxy(MicroPythonProxy):
+    def _finalize_repl(self):
+        # In some cases there may be still something coming.
+        sleep(0.1)
+        remainder = self._serial.read_all().decode("utf-8", "replace").strip()
+        # display it unless it looks like an extra raw prompt
+        if remainder and (len(remainder) > 40 or "raw REPL; CTRL-B to exit" not in remainder):
+            self._send_error_to_shell(remainder)
+            
     @property
     def firmware_filetypes(self):
         return [('*.bin files', '.bin'), ('all files', '.*')]
