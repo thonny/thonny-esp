@@ -2,7 +2,6 @@ from thonnycontrib.micropython import MicroPythonProxy, MicroPythonConfigPage,\
     add_micropython_backend
 from thonny import get_workbench, get_runner
 import os
-from thonny import THONNY_USER_BASE
 import subprocess
 from thonny.ui_utils import SubprocessDialog
 from thonny.running import get_frontend_python
@@ -22,15 +21,13 @@ class ESPProxy(MicroPythonProxy):
         return [('*.bin files', '.bin'), ('all files', '.*')]
     
     def erase_flash(self):
-        env = os.environ.copy()
-        env["PYTHONUSERBASE"] = THONNY_USER_BASE # Use Thonny plugins folder instead of regular userbase
         self.disconnect()
         cmd = [get_frontend_python(), '-u', '-m', 
                 'esptool', 
                 '--port', self.port, 
                 'erase_flash']
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                            universal_newlines=True, env=env)
+                            universal_newlines=True)
         dlg = SubprocessDialog(get_workbench(), proc, "Erasing flash", autoclose=False)
         dlg.wait_window()
         
