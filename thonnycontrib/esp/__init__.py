@@ -30,6 +30,9 @@ class ESPProxy(MicroPythonProxy):
                             universal_newlines=True)
         dlg = SubprocessDialog(get_workbench(), proc, "Erasing flash", autoclose=False)
         dlg.wait_window()
+    
+    def _supports_directories(self):
+        return True
         
         
 class ESP8266Proxy(ESPProxy):
@@ -116,13 +119,13 @@ def load_plugin():
         return (isinstance(get_runner().get_backend_proxy(), ESPProxy)
                 and get_runner().get_backend_proxy().micropython_upload_enabled)
         
-    get_workbench().add_command("uploadmicropythonesp", "tools", "Upload MicroPython to ESP8266/ESP32 ...",
+    get_workbench().add_command("uploadmicropythonesp", "device", "Upload MicroPython to ESP8266/ESP32 ...",
                                 upload_micropython,
                                 upload_micropython_enabled,
-                                group=120)
+                                group=40)
 
-    get_workbench().add_command("erasespflash", "tools", "Erase ESP8266/ESP32 flash",
+    get_workbench().add_command("erasespflash", "device", "Erase ESP8266/ESP32 flash",
                                 erase_flash,
                                 tester=erase_flash_enabled,
-                                group=120)
+                                group=40)
     
