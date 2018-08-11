@@ -10,15 +10,15 @@ for line in open(os.path.join(setupdir, 'requirements.txt'), encoding="UTF-8"):
 
 setup(
       name="thonny-esp",
-      version="0.1b1",
+      version="0.2b1",
       description="ESP8266 and ESP32 MicroPython support for Thonny IDE",
       long_description="""Plug-in for Thonny IDE which adds ESP8266 and ESP32 MicroPython backends. 
       
 More info: 
 
 * https://bitbucket.org/plas/thonny-esp
-* https://bitbucket.org/plas/thonny-micropython
-* http://thonny.org
+* https://bitbucket.org/plas/thonny/wiki/MicroPython
+* https://thonny.org
 """,
       url="https://bitbucket.org/plas/thonny-esp/",
       author="Aivar Annamaa",

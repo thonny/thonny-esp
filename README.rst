@@ -1,2 +1,1 @@
-See `thonny-micropython <https://bitbucket.org/plas/thonny-micropython/>`_
-for more info.
+See https://bitbucket.org/plas/thonny/wiki/MicroPython for more info.

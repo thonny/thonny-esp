@@ -1,4 +1,4 @@
-from thonnycontrib.micropython import MicroPythonProxy, MicroPythonConfigPage,\
+from thonny.plugins.micropython import MicroPythonProxy, MicroPythonConfigPage,\
     add_micropython_backend
 from thonny import get_workbench, get_runner
 import os
@@ -119,7 +119,7 @@ def load_plugin():
         return (isinstance(get_runner().get_backend_proxy(), ESPProxy)
                 and get_runner().get_backend_proxy().micropython_upload_enabled)
         
-    get_workbench().add_command("uploadmicropythonesp", "device", "Upload MicroPython to ESP8266/ESP32 ...",
+    get_workbench().add_command("uploadmicropythonesp", "device", "Install MicroPython to ESP8266/ESP32 ...",
                                 upload_micropython,
                                 upload_micropython_enabled,
                                 group=40)
