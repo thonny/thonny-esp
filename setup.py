@@ -16,8 +16,8 @@ setup(
       
 More info: 
 
-* https://bitbucket.org/plas/thonny-esp
-* https://bitbucket.org/plas/thonny/wiki/MicroPython
+* https://github.com/thonny/thonny-esp
+* https://github.com/thonny/thonny/wiki/MicroPython
 * https://thonny.org
 """,
       url="https://bitbucket.org/plas/thonny-esp/",
