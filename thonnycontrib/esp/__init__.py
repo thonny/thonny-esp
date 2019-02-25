@@ -33,6 +33,10 @@ class ESPProxy(MicroPythonProxy):
     
     def _supports_directories(self):
         return True
+    
+    @property
+    def allow_webrepl(self):
+        return True
         
         
 class ESP8266Proxy(ESPProxy):
