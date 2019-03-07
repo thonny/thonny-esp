@@ -95,6 +95,12 @@ class ESP32Proxy(ESPProxy):
 
     def _get_api_stubs_path(self):
         return os.path.join(os.path.dirname(__file__), "esp32_api_stubs")
+
+class ESP32LoBoProxy(ESP32Proxy):
+    def _get_path_prefix(self):
+        return "/flash/"        
+        
+
     
 class ESP8266ConfigPage(MicroPythonConfigPage):
     pass
@@ -102,9 +108,13 @@ class ESP8266ConfigPage(MicroPythonConfigPage):
 class ESP32ConfigPage(MicroPythonConfigPage):
     pass
 
+class ESP32LoBoConfigPage(ESP32ConfigPage):
+    pass
+
 def load_plugin():
     add_micropython_backend("ESP8266", ESP8266Proxy, "MicroPython on ESP8266", ESP8266ConfigPage)
-    add_micropython_backend("ESP32", ESP32Proxy, "MicroPython on ESP32", ESP32ConfigPage)
+    add_micropython_backend("ESP32", ESP32Proxy, "MicroPython on ESP32 (generic)", ESP32ConfigPage)
+    add_micropython_backend("ESP32LoBo", ESP32LoBoProxy, "MicroPython on ESP32 (LoBo)", ESP32LoBoConfigPage)
 
     def upload_micropython():
         proxy = get_runner().get_backend_proxy()
