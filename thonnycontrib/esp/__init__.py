@@ -31,9 +31,6 @@ class ESPProxy(MicroPythonProxy):
         dlg = SubprocessDialog(get_workbench(), proc, "Erasing flash", autoclose=False)
         dlg.wait_window()
     
-    def _supports_directories(self):
-        return True
-    
     @property
     def allow_webrepl(self):
         return True
