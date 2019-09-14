@@ -22,7 +22,7 @@ More info:
 """,
       url="https://bitbucket.org/plas/thonny-esp/",
       author="Aivar Annamaa",
-	  author_email="aivar.annamaa@gmail.com",
+      author_email="aivar.annamaa@gmail.com",
       license="MIT",
       classifiers=[
         "Environment :: MacOS X",
@@ -52,7 +52,7 @@ More info:
       platforms=["Windows", "macOS", "Linux"],
       python_requires=">=3.5",
       include_package_data=True,
-	  package_data={'thonnycontrib.esp': ['esp8266_api_stubs/*', 'esp32_api_stubs/*']},
+      package_data={'thonnycontrib.esp': ['esp8266_api_stubs/*', 'esp32_api_stubs/*']},
       install_requires=requirements,
       packages=["thonnycontrib.esp"],
 )

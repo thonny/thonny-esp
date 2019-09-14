@@ -109,9 +109,8 @@ class ESP32LoBoConfigPage(ESP32ConfigPage):
     pass
 
 def load_plugin():
-    add_micropython_backend("ESP8266", ESP8266Proxy, "MicroPython on ESP8266", ESP8266ConfigPage)
-    add_micropython_backend("ESP32", ESP32Proxy, "MicroPython on ESP32 (generic)", ESP32ConfigPage)
-    add_micropython_backend("ESP32LoBo", ESP32LoBoProxy, "MicroPython on ESP32 (LoBo)", ESP32LoBoConfigPage)
+    add_micropython_backend("ESP8266", ESP8266Proxy, "MicroPython (ESP8266)", ESP8266ConfigPage)
+    add_micropython_backend("ESP32", ESP32Proxy, "MicroPython (ESP32)", ESP32ConfigPage)
 
     def upload_micropython():
         proxy = get_runner().get_backend_proxy()
@@ -127,8 +126,7 @@ def load_plugin():
         proxy.erase_flash()
     
     def erase_flash_enabled():
-        return (isinstance(get_runner().get_backend_proxy(), ESPProxy)
-                and get_runner().get_backend_proxy().micropython_upload_enabled)
+        return isinstance(get_runner().get_backend_proxy(), ESPProxy) and get_runner().get_backend_proxy().micropython_upload_enabled
         
     get_workbench().add_command("uploadmicropythonesp", "device", "Install MicroPython to ESP8266/ESP32 ...",
                                 upload_micropython,
