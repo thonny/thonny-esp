@@ -1,2 +1,2 @@
-thonny>=3.0.0b1
+thonny >= 3.0.0b1, < 3.2.2
 esptool>=2.0

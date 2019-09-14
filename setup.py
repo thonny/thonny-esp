@@ -10,7 +10,7 @@ for line in open(os.path.join(setupdir, 'requirements.txt'), encoding="UTF-8"):
 
 setup(
       name="thonny-esp",
-      version="0.2b1",
+      version="0.2",
       description="ESP8266 and ESP32 MicroPython support for Thonny IDE",
       long_description="""Plug-in for Thonny IDE which adds ESP8266 and ESP32 MicroPython backends. 
       
@@ -19,8 +19,11 @@ More info:
 * https://github.com/thonny/thonny-esp
 * https://github.com/thonny/thonny/wiki/MicroPython
 * https://thonny.org
+
+NB! This plug-in is only relevant for Thonny up to 3.2.1. 
+Since 3.2.2 this functionality is included in the main package.
 """,
-      url="https://bitbucket.org/plas/thonny-esp/",
+      url="https://github.com/thonny/thonny-esp/",
       author="Aivar Annamaa",
       author_email="aivar.annamaa@gmail.com",
       license="MIT",
